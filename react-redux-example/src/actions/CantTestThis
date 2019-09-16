@@ -1,0 +1,25 @@
+/**
+ * So an issue with this file is that it CANNOT be unit tested, well at least.
+ * The actions call a string of callback functions, which works for the program, but jest will ONLY
+ * look down 1 layer and not really bother with the rest. It can acknowledge that a function is what is
+ * returned at the end of the day, but all the details are lost and there's no way to compare this function
+ * to something else.
+ * 
+ * To "unit-test" this, you'd basically just make a working version of the function that only goes 1 layer deep
+ * and then "test" that it works when passing in a value. This isn't great, and feels a lot like patting
+ * yourself on the back since you basically created and tested passing code from the get-go, not what you
+ * actually intended to test. An example that shows why you can't test a higher order function (makes functions)
+ * follows this block.
+ * 
+ * const action = (//callback 1) => (//callback2) => {
+       ({ //callback 3 which has the desired object
+        payload: {
+            amount: 1
+        },
+        type: clickerAction.clickerTypes.CLICKER_UPDATE
+    })
+}
+it('should create an action', () => {
+expect(clickerAction.updateClicks(1)).toEqual(action); //fails because Function anonymous =/= Function action
+});
+*/
